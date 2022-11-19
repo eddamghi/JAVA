@@ -1,8 +1,8 @@
-import lombok.Getter;
-
+import lombok.*;
 public abstract class ObjectProperties {
-    @Getter protected String fullPath;
-    @Getter protected String name;
+    @Getter
+    protected String fullPath;
+    @Getter  protected String name;
     @Getter protected Boolean isRead;
     @Getter protected Boolean isWrite;
     @Getter protected Boolean isHidden;

@@ -9,7 +9,7 @@ import java.util.List;
 
 public class ContactsFolder {
     @Getter private final List<Contact> contacts = new ArrayList<>();
-    @Getter private File path;
+    @Getter private final File path;
 
     public ContactsFolder(String path) throws IOException {
         this.path = new File(path);
@@ -20,22 +20,19 @@ public class ContactsFolder {
         File[] contactsFile = this.path.listFiles();
         assert contactsFile != null;
         for (File cf: contactsFile)  {
-             var fileName = cf.getName();
-             if (fileName.endsWith(".txt")) {
-                 var contactName = fileName.substring(0, fileName.length() - 4);
-                 var contactPhoneNumber = Files.readString(cf.toPath());
-                 addContact(contactName, contactPhoneNumber);
-             }
-        }
+            var fileName = cf.getName();
+            if (fileName.endsWith(".txt")) {
+                var contactName = fileName.substring(0, fileName.length() - 4);
+                var contactPhoneNumber = Files.readString(cf.toPath());
+                addContact(contactName, contactPhoneNumber);
+            }
+         }
     }
 
     public void addContact(String name, String phoneNumber) {
         Contact contact = new Contact(name, phoneNumber);
         if (contacts.contains(contact)) { return; }
         try {
-            File newContact = new File(name + ".txt");
-            if(newContact.createNewFile())
-                System.out.println("file created " + newContact.getCanonicalPath());
             FileWriter contactWriter = new FileWriter(name + ".txt");
             contactWriter.write(phoneNumber);
             contactWriter.close();

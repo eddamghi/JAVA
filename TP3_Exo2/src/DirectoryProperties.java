@@ -1,10 +1,11 @@
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class DirectoryProperties extends ObjectProperties {
-    private List<FileProperties> subFiles = new ArrayList<>();
-    private List<DirectoryProperties> subDirectories = new ArrayList<>();
+    private final List<FileProperties> subFiles = new ArrayList<>();
+    private final List<DirectoryProperties> subDirectories = new ArrayList<>();
 
     public DirectoryProperties(String path){
         var dir = new File(path);
@@ -13,7 +14,7 @@ public class DirectoryProperties extends ObjectProperties {
         isRead = dir.canRead();
         isWrite = dir.canWrite();
         isHidden = dir.isHidden();
-        for (String itemName : dir.list()) {
+        for (String itemName : Objects.requireNonNull(dir.list())) {
             String itemPath = fullPath + File.separator + itemName;
             var item = new File(itemPath);
             if (item.isFile()){
